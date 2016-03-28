@@ -6,6 +6,7 @@ import breeze.stats.DescriptiveStats._
 import breeze.linalg._
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
+import org.apache.spark.rdd.RDD
 
 Logger.getLogger("org").setLevel(Level.OFF)
 Logger.getLogger("akka").setLevel(Level.OFF)
@@ -117,8 +118,8 @@ def quantiles(quantiles: Array[Double], ecdf: org.apache.spark.rdd.RDD[(Double, 
     result
 }
 
-
-val rawdata = sc.textFile(file)
+val df = sqlContext.parquetFile(file)
+val rawdata: RDD[String] = df.map(_.mkString(","))
 
 val datanoheader = removeHeader(rawdata)
 val sample = datanoheader.sample(false, .0001, 12345)
