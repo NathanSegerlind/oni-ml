@@ -6,6 +6,7 @@ import breeze.stats.DescriptiveStats._
 import breeze.linalg._
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
+import org.apache.spark.rdd.RDD
 
 Logger.getLogger("org").setLevel(Level.OFF)
 Logger.getLogger("akka").setLevel(Level.OFF)
@@ -60,7 +61,8 @@ var time_cuts : Array[Double] = cuts_input.split(",")(2).split(" ").map(_.toDoub
 
 //-----------------------------
 
-val rawdata = sc.textFile(file)
+val df = sqlContext.parquetFile(file)
+val rawdata : RDD[String] = df.map(_.mkString(","))
 //Array(tr, try, trm, trd, trh, trm, trs, td, sa, da, sp, dp, pr, flg, fwd, stos, ipkt, ibyt, opkt, obyt, in, out, sas, das, dtos, dir, ra)
 //2015-04-12 00:01:06,2015,4,12,0,1,6,1.340,10.0.121.115,192.168.1.33,80,54048,TCP,.AP.SF,0,0,9,5084,0,0,2,3,0,0,0,0,10.219.32.250
 
