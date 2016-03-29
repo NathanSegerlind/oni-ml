@@ -104,7 +104,7 @@ val words = sc.broadcast(l_words)
 //-----------------------------
 
 var multidata = {
-    val df = sqlContext.parquetFile( file_list.split(",")(0) )
+    var df = sqlContext.parquetFile( file_list.split(",")(0) )
     var tempRDD: org.apache.spark.rdd.RDD[String] = df.map(_.mkString(","))
     val files = file_list.split(",")
     for ( (file, index) <- files.zipWithIndex){
