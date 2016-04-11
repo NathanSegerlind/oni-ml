@@ -5,7 +5,7 @@ source /etc/oni.conf
 
 
 #  copy solution files to all nodes 
-if [$1 = '-o' or $1 = '--overwrite']; then
+if [$1 = '-x' or $1 = '--excludelda']; then
    EXCLUDES = "--exclude '*lda-c/'"
 else
    EXCLUDES = ""
@@ -13,6 +13,6 @@ fi
 
 for d in "${NODES[@]}" 
 do 
-     rsync -r --verbose $EXCLUDES  ${LUSER}/ml $d:${LUSER}/.    
+     rsync -r --copy-links --verbose $EXCLUDES  ${LUSER}/ml $d:${LUSER}/.    
 done
 
