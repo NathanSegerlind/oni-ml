@@ -78,7 +78,7 @@ val file = System.getenv("DPATH")
 val output_file = System.getenv("HPATH") + "/word_counts"
 //val output_file_for_lda = "/user/history/hiveflow/netflow/lda_word_counts_for_20150618"
 val output_file_for_lda = System.getenv("HPATH") + "/lda_word_counts"
-val quantilesFilePath = System.getenv("HPATH") + "/quantiles.csv"
+val quantilesFilePath = System.getenv("LPATH") + "/quantiles.csv"
 
 val compute_quantiles : Boolean = true
 val quant = Array(0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
