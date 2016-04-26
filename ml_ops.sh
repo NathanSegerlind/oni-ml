@@ -30,7 +30,7 @@ hadoop fs -rm -R ${HPATH}/lda_word_counts
 #export CUT
 
 #kinit -kt /etc/security/keytabs/smokeuser.headless.keytab <user-id>
-time spark-shell --master yarn-client --executor-memory  ${SPK_EXEC_MEM}  --driver-memory 2g --num-executors ${SPK_EXEC} --executor-cores 1 --conf spark.shuffle.io.preferDirectBufs=false --conf shuffle.service.enabled=true --conf spark.driver.maxResultSize="2g"  -i scala ${DSOURCE}_pre_lda.scala
+time spark-shell --master yarn-client --executor-memory  ${SPK_EXEC_MEM}  --driver-memory 2g --num-executors ${SPK_EXEC} --executor-cores 1 --conf spark.shuffle.io.preferDirectBufs=false --conf shuffle.service.enabled=true --conf spark.driver.maxResultSize="2g"  -i scala ${DSOURCE}_pre_lda.scala onimllib.scala
 
 # move TDM to local file system
 # do we have to do a mkdir here?
