@@ -159,19 +159,19 @@ if (compute_quantiles == true){
 
     println("calculating time cuts ...")
     time_cuts = distributed_quantiles(quant, compute_ecdf(data_with_time.map(row => row(27).toDouble )))
-    val tcutString = time_cuts.mkString(",")
+    val tcutString = time_cuts.mkString(",") + "\n"
     bw.write(tcutString)
     println(tcutString)
 
     println("calculating byte cuts ...")
     ibyt_cuts = distributed_quantiles(quant, compute_ecdf(data_with_time.map(row => row(17).toDouble )))
-    val ibyt_cut_string = ibyt_cuts.mkString(",")
+    val ibyt_cut_string = ibyt_cuts.mkString(",")+ "\n"
     bw.write(ibyt_cut_string)
     println(ibyt_cut_string)
 
     println("calculating pkt cuts")
     ipkt_cuts = distributed_quantiles(quint, compute_ecdf(data_with_time.map(row => row(16).toDouble )))
-    val ipkt_cut_string = ipkt_cuts.mkString(",")
+    val ipkt_cut_string = ipkt_cuts.mkString(",")+ "\n"
     bw.write(ipkt_cut_string)
     println(ipkt_cut_string)
 
