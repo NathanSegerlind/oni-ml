@@ -6,6 +6,7 @@ import breeze.stats.DescriptiveStats._
 import breeze.linalg._
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
+import java.io._
 
 Logger.getLogger("org").setLevel(Level.OFF)
 Logger.getLogger("akka").setLevel(Level.OFF)
@@ -77,6 +78,8 @@ val file = System.getenv("DPATH")
 val output_file = System.getenv("HPATH") + "/word_counts"
 //val output_file_for_lda = "/user/history/hiveflow/netflow/lda_word_counts_for_20150618"
 val output_file_for_lda = System.getenv("HPATH") + "/lda_word_counts"
+val quantilesFilePath = System.getenv("HPATH") + "/quantiles.csv"
+
 val compute_quantiles : Boolean = true
 val quant = Array(0.1,0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
 val quint = Array(0, 0.2, 0.4, 0.6, 0.8)
@@ -148,15 +151,31 @@ def add_time(row: Array[String]) = {
 var data_with_time = datagood.map(_.trim.split(",")).map(add_time)
 
 if (compute_quantiles == true){
+
+
+    val file = new File(quantilesFilePath)
+    val bw = new BufferedWriter(new FileWriter(file))
+
     println("calculating time cuts ...")
     time_cuts = distributed_quantiles(quant, compute_ecdf(data_with_time.map(row => row(27).toDouble )))
-    println(time_cuts.mkString(",") )
+    tcutString = time_cuts.mkString(",")
+    bw.write(tcutString)
+    println(tcutString)
+
     println("calculating byte cuts ...")
     ibyt_cuts = distributed_quantiles(quant, compute_ecdf(data_with_time.map(row => row(17).toDouble )))
-    println(ibyt_cuts.mkString(",") )
+    ibyt_cut_string = ibyt_cuts.mkString(",")
+    bw.write(ibyt_cut_string)
+    println(ibyt_cut_string)
+
     println("calculating pkt cuts")
     ipkt_cuts = distributed_quantiles(quint, compute_ecdf(data_with_time.map(row => row(16).toDouble )))
-    println(ipkt_cuts.mkString(",") )
+    ipkt_cut_string = ipkt_cuts.mkString(",")
+    bw.write(ipkt_cut_string)
+    println(ipkt_cut_string)
+
+    bw.close()
+
 }
 
 def bin_ibyt_ipkt_time(row: Array[String], 
