@@ -14,8 +14,10 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "1.3.0"
 libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.2.6"
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.10"
 libraryDependencies += "com.github.scopt" %% "scopt" % "3.5.0"
+libraryDependencies += "com.netaporter" %% "scala-uri" % "0.4.14"
 
 resolvers += Resolver.sonatypeRepo("public")
+
 
 val meta = """META.INF(.)*""".r
 
